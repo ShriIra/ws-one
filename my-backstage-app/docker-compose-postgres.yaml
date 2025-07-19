@@ -1,0 +1,18 @@
+version: '4'
+
+services:
+  postgres:
+    image: postgres:17.0-bookworm
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: <secret>
+    ports:
+      - 5432:5432
+
+# docker compose -f docker-compose-postgres.yaml up
+
+
+# docker pull postgres:17.0-bookworm
+
+# docker run -d --name postgres --restart=always -p 5432:5432 -e POSTGRES_PASSWORD=<secret> postgres:17.0-bookworm
+

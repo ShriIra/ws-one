@@ -1,5 +1,11 @@
 import { makeStyles } from '@material-ui/core';
 
+// import MyCustomLogoFull from './logo/my-company-logo.png';
+
+// const LogoFull = () => {
+//   return <img src={MyCustomLogoFull} />
+// };
+
 const useStyles = makeStyles({
   svg: {
     width: 'auto',
@@ -9,6 +15,7 @@ const useStyles = makeStyles({
     fill: '#7df3e1',
   },
 });
+
 const LogoFull = () => {
   const classes = useStyles();
 

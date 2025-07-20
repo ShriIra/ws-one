@@ -39,3 +39,19 @@ spec:
     message ExampleMessage {
       string example = 1;
     };
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: artist-lookup
+  description: Artist Lookup
+  links:
+    - url: https://example.com/alert
+      title: Alerts
+      icon: alert
+spec:
+  type: website
+  lifecycle: experimental
+  owner: guests
+  system: examples
+  providesApis: [example-grpc-api]

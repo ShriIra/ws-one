@@ -26,6 +26,7 @@ import { searchPage } from './components/search/SearchPage';
 import { Root } from './components/Root';
 import { githubAuthApiRef } from '@backstage/core-plugin-api';
 
+
 import {
   AlertDisplay,
   OAuthRequestDialog,
@@ -36,6 +37,11 @@ import { AppRouter, FlatRoutes } from '@backstage/core-app-api';
 import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
+import LightIcon from '@material-ui/icons/WbSunny';
+import { TechRadarPage } from '@backstage-community/plugin-tech-radar';
+import { themes, UnifiedThemeProvider } from '@backstage/theme';
+import { myTheme } from './themes/myTheme';
+import AlarmIcon from '@material-ui/icons/Alarm';
 
 const app = createApp({
   apis,
@@ -71,12 +77,25 @@ const app = createApp({
       />
     ),
   },
+  themes: [{
+    id: 'my-theme',
+    title: 'My Custom Theme',
+    variant: 'light',
+    icon: <LightIcon />,
+    Provider: ({ children }) => (
+      <UnifiedThemeProvider theme={myTheme} children={children} />
+    )
+  }],
+  icons: {
+    alert: AlarmIcon,
+  }
 });
 
 const routes = (
   <FlatRoutes>
     <Route path="/" element={<Navigate to="catalog" />} />
     <Route path="/catalog" element={<CatalogIndexPage />} />
+    <Route path="/tech-radar" element={<TechRadarPage width={1500} height={800} />} />
     <Route
       path="/catalog/:namespace/:kind/:name"
       element={<CatalogEntityPage />}
@@ -119,3 +138,9 @@ export default app.createRoot(
     </AppRouter>
   </>,
 );
+
+
+// import { useApp } from '@backstage/core-plugin-api';
+
+// const app = useApp();
+// const alertIcon = app.getSystemIcon('alert');

@@ -42,6 +42,8 @@ import { TechRadarPage } from '@backstage-community/plugin-tech-radar';
 import { themes, UnifiedThemeProvider } from '@backstage/theme';
 import { myTheme } from './themes/myTheme';
 import AlarmIcon from '@material-ui/icons/Alarm';
+import { HomepageCompositionRoot } from '@backstage/plugin-home';
+import { HomePage } from './components/home/HomePage';
 
 const app = createApp({
   apis,
@@ -93,7 +95,10 @@ const app = createApp({
 
 const routes = (
   <FlatRoutes>
-    <Route path="/" element={<Navigate to="catalog" />} />
+    {/* <Navigate to="catalog" /> */}
+    <Route path="/" element={<HomepageCompositionRoot />}>
+      <HomePage />
+    </Route>
     <Route path="/catalog" element={<CatalogIndexPage />} />
     <Route path="/tech-radar" element={<TechRadarPage width={1500} height={800} />} />
     <Route

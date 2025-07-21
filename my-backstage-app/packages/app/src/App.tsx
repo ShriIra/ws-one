@@ -1,4 +1,4 @@
-import { Navigate, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { apiDocsPlugin, ApiExplorerPage } from '@backstage/plugin-api-docs';
 import {
   CatalogEntityPage,
@@ -39,7 +39,7 @@ import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 import LightIcon from '@material-ui/icons/WbSunny';
 import { TechRadarPage } from '@backstage-community/plugin-tech-radar';
-import { themes, UnifiedThemeProvider } from '@backstage/theme';
+import { UnifiedThemeProvider } from '@backstage/theme';
 import { myTheme } from './themes/myTheme';
 import AlarmIcon from '@material-ui/icons/Alarm';
 import { HomepageCompositionRoot } from '@backstage/plugin-home';

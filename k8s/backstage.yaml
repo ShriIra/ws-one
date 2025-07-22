@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backstage
+  namespace: backstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backstage
+  template:
+    metadata:
+      labels:
+        app: backstage
+    spec:
+      containers:
+        - name: backstage
+          image: backstage:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 7007
+          envFrom:
+            - secretRef:
+                name: postgres-secrets
+            - secretRef:
+                name: backstage-secrets
+          # readinessProbe:
+          #   httpGet:
+          #     port: 7007
+          #     path: /healthcheck
+          # livenessProbe:
+          #   httpGet:
+          #     port: 7007
+          #     path: /healthcheck
+
+# eval $(minikube docker-env)
+# yarn build-image --tag backstage:1.0.0
+
+# # app-config.production.yaml
+# backend:
+#   database:
+#     client: pg
+#     connection:
+#       host: ${POSTGRES_HOST}
+#       port: ${POSTGRES_PORT}
+#       user: ${POSTGRES_USER}
+#       password: ${POSTGRES_PASSWORD}
+
+
+# kubectl apply -f k8s/backstage.yaml
+
+# kubectl get deployments --namespace=backstage
+
+# kubectl get pods --namespace=backstage
+
+# kubectl logs --namespace=backstage -f backstage-<uuid> -c backstage
+

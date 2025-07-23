@@ -38,3 +38,11 @@ kubectl get pods --namespace=backstage
 
 kubectl exec -it --namespace=backstage postgres-adarfa -- /bin/bash
 
+export HTTP_PROXY=http://proxy.company.com:8080
+export HTTPS_PROXY=https://secure-proxy.company.com:8080
+export NO_PROXY=localhost,internal.company.com
+export GLOBAL_AGENT_HTTP_PROXY=${HTTP_PROXY}
+export GLOBAL_AGENT_HTTPS_PROXY=${HTTPS_PROXY}
+export GLOBAL_AGENT_NO_PROXY=${NO_PROXY}
+export YARN_HTTP_PROXY=${HTTP_PROXY} # optional
+export YARN_HTTPS_PROXY=${HTTPS_PROXY} #optional

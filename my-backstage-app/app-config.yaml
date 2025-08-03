@@ -73,7 +73,16 @@ techdocs:
     type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
 
 auth:
+  # provider: 'static'
+  # static:
+  #   keys:
+  #     - keyId: 'primary'
+  #       publicKeyFile: /path/to/public.key
+  #       privateKeyFile: /path/to/private.key
+  #       algorithm: # optional
+  #     - keyId: ...
   # see https://backstage.io/docs/auth/ to learn about auth providers
+  environment: 'development'
   providers:
     # See https://backstage.io/docs/auth/guest/provider
     guest: {}

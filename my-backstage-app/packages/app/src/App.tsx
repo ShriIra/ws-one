@@ -24,12 +24,16 @@ import { apis } from './apis';
 import { entityPage } from './components/catalog/EntityPage';
 import { searchPage } from './components/search/SearchPage';
 import { Root } from './components/Root';
-import { githubAuthApiRef } from '@backstage/core-plugin-api';
-
+import {
+  configApiRef,
+  githubAuthApiRef,
+  useApi,
+} from '@backstage/core-plugin-api';
 
 import {
   AlertDisplay,
   OAuthRequestDialog,
+  ProxiedSignInPage,
   SignInPage,
 } from '@backstage/core-components';
 import { createApp } from '@backstage/app-defaults';
@@ -65,32 +69,79 @@ const app = createApp({
     });
   },
   components: {
-    SignInPage: props => (
-      <SignInPage 
-        {...props} 
-        auto 
-        // providers={['guest']} 
-        providers={[{
-          id: 'github-auth-provider',
-          title: 'GitHub',
-          message: 'Sign in using GitHub',
-          apiRef: githubAuthApiRef,
-        }]} 
-      />
-    ),
+    // SignInPage: props => <ProxiedSignInPage {...props} provider="awsalb" />
+    // SignInPage: props => (
+    //   <ProxiedSignInPage 
+    //     {...props}
+    //     provider="awsalb"
+    //     headers={{ 'x-some-key': someValue}}
+    //    />
+    // )
+    // SignInPage: props => (
+    //   <ProxiedSignInPage 
+    //     {...props}
+    //     provider="awsalb"
+    //     headers={ async () => {
+    //       const someValue = await someFn();
+    //       return { 'x-some-key': someValue}}
+    //     }
+    //   />
+    // )
+    SignInPage: props => {
+      const configApi = useApi(configApiRef);
+      if (configApi.getString('auth.environment') === 'development') {
+        return (
+          <SignInPage
+            {...props}
+            auto
+            // provider={{
+            //   id: 'github-auth-provider',
+            //   title: 'GitHub',
+            //   message: 'Sign in using GitHub',
+            //   apiRef: githubAuthApiRef,
+            // }}
+            // providers={['guest']}
+            providers={[
+              'guest',
+              {
+                id: 'github-auth-provider',
+                title: 'GitHub',
+                message: 'Sign in using GitHub',
+                apiRef: githubAuthApiRef,
+              },
+            ]}
+          />
+        );
+      }
+      return (
+        <SignInPage
+            {...props}
+            auto
+            provider={{
+              id: 'github-auth-provider',
+              title: 'GitHub',
+              message: 'Sign in using GitHub',
+              apiRef: githubAuthApiRef,
+            }}
+          />
+      );
+      // return <ProxiedSignInPage {...props} provider="gcpiap" />;
+    },
   },
-  themes: [{
-    id: 'my-theme',
-    title: 'My Custom Theme',
-    variant: 'light',
-    icon: <LightIcon />,
-    Provider: ({ children }) => (
-      <UnifiedThemeProvider theme={myTheme} children={children} />
-    )
-  }],
+  themes: [
+    {
+      id: 'my-theme',
+      title: 'My Custom Theme',
+      variant: 'light',
+      icon: <LightIcon />,
+      Provider: ({ children }) => (
+        <UnifiedThemeProvider theme={myTheme} children={children} />
+      ),
+    },
+  ],
   icons: {
     alert: AlarmIcon,
-  }
+  },
 });
 
 const routes = (
@@ -100,7 +151,10 @@ const routes = (
       <HomePage />
     </Route>
     <Route path="/catalog" element={<CatalogIndexPage />} />
-    <Route path="/tech-radar" element={<TechRadarPage width={1500} height={800} />} />
+    <Route
+      path="/tech-radar"
+      element={<TechRadarPage width={1500} height={800} />}
+    />
     <Route
       path="/catalog/:namespace/:kind/:name"
       element={<CatalogEntityPage />}
@@ -143,7 +197,6 @@ export default app.createRoot(
     </AppRouter>
   </>,
 );
-
 
 // import { useApp } from '@backstage/core-plugin-api';
 

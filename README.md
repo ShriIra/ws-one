@@ -46,3 +46,19 @@ export GLOBAL_AGENT_HTTPS_PROXY=${HTTPS_PROXY}
 export GLOBAL_AGENT_NO_PROXY=${NO_PROXY}
 export YARN_HTTP_PROXY=${HTTP_PROXY} # optional
 export YARN_HTTPS_PROXY=${HTTPS_PROXY} #optional
+
+
+# Generate a private key using ES256 algorithm
+```
+openssl ecparam -name prime256v1 -genkey -out private.ec.key
+```
+
+# Convert into PKCS#8 format
+```
+openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in private.ec.key -out private.key
+```
+
+# Extract public key
+```
+openssl ec -inform PEM -outform PEM -pubout -in private.key -out public.key
+```

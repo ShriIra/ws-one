@@ -109,6 +109,12 @@ const app = createApp({
                 message: 'Sign in using GitHub',
                 apiRef: githubAuthApiRef,
               },
+              {
+                id: 'auth0-auth-provider',
+                title: 'Auth0',
+                message: 'Sign in using Auth0',
+                apiRef: auth0AuthApiRef,
+              },
             ]}
           />
         );

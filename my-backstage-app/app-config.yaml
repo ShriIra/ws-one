@@ -116,6 +116,14 @@ auth:
           resolvers:
             - resolver: usernameMatchingUserEntityName
             # - resolver: emailMatchingUserEntityAnnotation
+    awsalb:
+      issuer: https://example.okta.com/oauth2/default
+      signer: 'arn:aws:elasticloadbalancing:region:account-id:loadbalancer/app/my-load-balancer/50dc6c495c0c9188'
+      region: 'us-west-2'
+      sessionDuration: { hours: 24 }
+      signIn:
+        resolvers:
+          - resolver: emailMatchingUserEntityProfileEmail
   session:
     secret: ${AUTH_SESSION_SECRET}
   

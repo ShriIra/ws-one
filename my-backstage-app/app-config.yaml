@@ -102,6 +102,20 @@ auth:
         connection: ${AUTH_AUTH0_CONNECTION}
         connectionScope: ${AUTH_AUTH0_CONNECTION_SCOPE}
         sessionDuration: { hours: 24 }
+    atlassian:
+      development:
+        clientId: ${AUTH_ATLASSIAN_CLIENT_ID}
+        clientSecret: ${AUTH_ATLASSIAN_CLIENT_SECRET}
+        audience: https://api.atlassian.com
+        callbackUrl: http://localhost:7007/auth/atlassian/handler/frame
+        additionalScopes:
+          - read:jira-user
+          - read:jira-work
+        sessionDuration: { hours: 24 }
+        signIn:
+          resolvers:
+            - resolver: usernameMatchingUserEntityName
+            # - resolver: emailMatchingUserEntityAnnotation
   session:
     secret: ${AUTH_SESSION_SECRET}
   
